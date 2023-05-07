@@ -1,0 +1,123 @@
+<?php
+require "conn.php";
+session_start();
+error_reporting(0);
+?>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="register.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+<div class="back-button">
+    <button onclick="window.location.href = 'landing_page.php'"><b><-Back</b></button>
+  </div>
+  <?php
+        if(isset($_POST['register_button'])){
+
+	          $fullname = $_POST['fullname'];
+            $uname = $_POST['uname'];
+            $email = $_POST['email'];
+            $student_num = $_POST['student_num'];
+            $upass = $_POST['upass'];
+            $address =$_POST['address'];
+            $gender = $_POST['gender'];
+            $course = $_POST['course'];
+            $section = $_POST['section'];
+            $year = $_POST['year'];
+            $birthday = $_POST['birthday'];
+
+            $sql = "INSERT INTO user (us_us,us_pass,student_num,email,fullname,address,gender,course,section,year,birthday) 
+            VALUES('$uname' , '$upass' , '$student_num', '$email', '$fullname','$address','$gender','$course','$section','$year','$birthday')";
+            
+            if (mysqli_query($conn, $sql))
+            {
+                header('Location: registered.php');
+            }
+
+            else{
+                echo "Error:" .mysqli_error($conn);
+            }
+            mysqli_close($conn);
+        }
+        ?>
+
+  <div class="container">
+    <div class="title">Registration</div>
+    <div class="content">
+      <form action="register.php" method="post">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Full Name</span>
+            <input type="text" name="fullname" placeholder="Enter your name" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Username</span>
+            <input type="text" name="uname" placeholder="Enter your username" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Student Number</span>
+            <input type="text" name="student_num" placeholder="Enter your number" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Address</span>
+            <input type="text" name="address" placeholder="Enter your address" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Course</span>
+            <input type="text" name="course" placeholder="Enter your course" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Section</span>
+            <input type="text" name="section" placeholder="Enter your section" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Year</span>
+            <input type="text" name="year" placeholder="Enter your year" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Birthday</span>
+            <input type="date" name="birthday" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            <input type="password" name="upass" placeholder="Enter your password" required>
+          </div>
+        </div>
+       
+        <div class="gender-details">
+          <input type="radio" name="gender" id="dot-1" value="Male" <?php if($gender == "Male");?>>
+          <input type="radio" name="gender" id="dot-2" value="Female" <?php if($gender == "Female");?>>
+          <input type="radio" name="gender" id="dot-3" value="Prefer_not_to_say" <?php if($gender == "Prefer_not_to_say");?>>
+          <span class="gender-title">Gender</span>
+          <div class="category">
+            <label for="dot-1">
+            <span class="dot one"></span>
+            <span class="gender">Male</span>
+          </label>
+          <label for="dot-2">
+            <span class="dot two"></span>
+            <span class="gender">Female</span>
+          </label>
+          <label for="dot-3">
+            <span class="dot three"></span>
+            <span class="gender">Prefer not to say</span>
+            </label>
+          </div>
+        </div>
+        <div class="button">
+          <input type="submit" name="register_button" value="Register">
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

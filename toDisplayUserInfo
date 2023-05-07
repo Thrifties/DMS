@@ -1,0 +1,24 @@
+<?php
+$user = $_SESSION['user_emailadd'];
+
+  $query1 = "SELECT 'user_studentnum','user_birthdate','user_gender','user_contactnum','user_course','user_specialization','user_section' FROM dms_user WHERE user_emailadd = '$user'";
+  $result1 = mysqli_query($conn, $query1);
+  if(mysqli_num_rows($result1) > 0 ){
+        while($info = $result1->fetch_assoc()){ 
+            $student_num = $info['user_studentnum'];
+            $birthdate = $info['user_birthdate'];
+            $gender = $info['user_gender'];
+            $contactnum = $info['user_contactnum'];
+            $course = $info['user_course'];
+            $specialization = $info['user_specialization'];
+            $section = $info['user_section'];
+        }
+  }
+
+  $query2 = "SELECT CONCAT('user_firstname',' ','user_lastname') AS name  FROM dms_user  WHERE user_emailadd = '$user'";
+  $result2 = $conn->query($query2);
+  if($result2==true){
+            $convert = mysqli_fetch_assoc($result2);
+            $name = ($convert['name']);
+    }
+?>
